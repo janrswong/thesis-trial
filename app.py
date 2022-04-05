@@ -15,7 +15,7 @@ st.set_page_config(page_title="LSTM vs ARIMA", layout='wide')
 
 # PAGE LAYOUT
 # heading
-st.title("Brent Crude Oil Benchmark")
+st.title("Crude Oil Benchmark Stock Price Prediction LSTM and ARIMA Models")
 st.write("""© Castillon, Ignas, Wong""")
 
 # sidebar
@@ -25,7 +25,7 @@ with st.sidebar.header('Set Data Split'):
     st.sidebar.slider('Data split ratio (% for Training Set)', 10, 90, 80,5)
 
 # model selection
-modSelect = st.selectbox("Model:",("ARIMA & LSTM","LSTM", "ARIMA"))
+modSelect = st.selectbox("Select Model for Prediction:",("ARIMA & LSTM","LSTM", "ARIMA"))
 
 # //show option selected
 # st.write(modSelect) 
@@ -66,3 +66,8 @@ st.line_chart(data=df['Close'], width=0, height=0, use_container_width=True,)
 fig = px.line(df, x=df.index, y=["Close","Open"], 
     title="BRENT CRUDE OIL PRICES", width=1000)
 st.plotly_chart(fig, use_container_width=True)
+
+# predicted data
+st.write("Predicted Data")
+# accuracy metrics
+st.write("Accuracy Metrics")
