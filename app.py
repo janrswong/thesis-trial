@@ -19,9 +19,10 @@ with st.sidebar.header('Set Data Split'):
     st.sidebar.slider('Data split ratio (% for Training Set)', 10, 90, 80,5)
 
 # model selection
-options = st.selectbox("Model:",("ARIMA & LSTM","LSTM", "ARIMA"))
+modSelect = st.selectbox("Model:",("ARIMA & LSTM","LSTM", "ARIMA"))
 
-# st.write(options) //show option selected
+# //show option selected
+# st.write(modSelect) 
 
 # select time interval
 interv = st.select_slider('Select Time Series Data Interval for Prediction', options=['Weekly', 'Monthly','Quarterly','Yearly'])
