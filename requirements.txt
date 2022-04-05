@@ -7,5 +7,5 @@ plotly==5.6.0
 scikit-learn==0.23.2
 click==8.0.4
 yfinance==0.1.70
-matplotlib==3.6.0
+matplotlib==3.5.1
 cufflinks==0.17.3
