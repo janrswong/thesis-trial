@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 # from statsmodels.tsa.arima_model import ARIMA
 # from sklearn.metrics import mean_absolute_percentage_error, mean_squared_error,mean_absolute_error
 import numpy as np
-import plotly.graph_objects as go
-
+# import plotly.graph_objects as go
+import plotly.express as px
 # from sklearn.model_selection import train_test_split
 # from sklearn.metrics import mean_squared_error, 
 
@@ -61,3 +61,8 @@ st.write("Visualizations")
 # TODO: find better line graphs for visualization
 st.line_chart(data=df['Close'], width=0, height=0, use_container_width=True,)
 
+
+# or plot the time series 
+fig = px.line(df, x=df.index, y=["Close"], 
+    title="BRENT CRUDE OIL PRICES", width=1000)
+st.plotly_chart(fig, use_container_width=False)
