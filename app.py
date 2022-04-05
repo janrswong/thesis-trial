@@ -2,9 +2,7 @@ import streamlit as st
 import pandas as pd
 import yfinance as yf
 # from sklearn.model_selection import train_test_split
-
 # from sklearn.metrics import mean_squared_error, 
-
 
 # page expands to full width
 st.set_page_config(page_title="LSTM vs ARIMA", layout='wide')
@@ -12,12 +10,11 @@ st.set_page_config(page_title="LSTM vs ARIMA", layout='wide')
 # PAGE LAYOUT
 # heading
 st.title("Brent Crude Oil Benchmark")
-st.write("""Yaharooo""")
+st.write("""© Castillon, Ignas, Wong""")
 
 # sidebar
 # Sidebar - Specify parameter settings
-with st.sidebar.header('2. Set Parameters'):
-    # split_size = st.sidebar.slider('Data split ratio (% for Training Set)', 10, 50, 60, 70, 90, 80)
+with st.sidebar.header('Set Data Split'):
   # PARAMETERS min,max,default,skip
     st.sidebar.slider('Data split ratio (% for Training Set)', 10, 90, 80,5)
 
@@ -31,9 +28,7 @@ interv = st.select_slider('Select Time Series Data Interval for Prediction', opt
 
 # st.write(interv[0])
 
-
-# Function to convert number into string
-# Switcher is dictionary data type here
+# Function to convert time series to interval
 def getInterval(argument):
     switcher = {
         "W": "1wk",
@@ -41,19 +36,15 @@ def getInterval(argument):
         "Q": "3mo",
         "Y": "1d"
     }
- 
-    # get() method of dictionary data type returns
-    # value of passed argument if it is present
-    # in dictionary otherwise second argument will
-    # be assigned as default value of passed argument
     return switcher.get(argument, "1d")
 
 
-# show raw data using button
+# show raw data
 st.write("Raw Data")
-if st.button('Press to see Brent Crude Oil Raw Data'):
-  df = yf.download('BZ=F', interval= getInterval(interv[0]))
-  df
+# using button
+# if st.button('Press to see Brent Crude Oil Raw Data'):
+df = yf.download('BZ=F', interval= getInterval(interv[0]))
+df
   
 # model
   
