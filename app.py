@@ -16,7 +16,7 @@ st.set_page_config(page_title="LSTM vs ARIMA", layout='wide')
 # PAGE LAYOUT
 # heading
 st.title("Crude Oil Benchmark Stock Price Prediction LSTM and ARIMA Models")
-st.write("""© Castillon, Ignas, Wong""")
+st.subheader("""© Castillon, Ignas, Wong""")
 
 # sidebar
 # Sidebar - Specify parameter settings
@@ -47,7 +47,7 @@ def getInterval(argument):
 
 
 # show raw data
-st.write("Raw Data")
+st.header("Raw Data")
 # using button
 # if st.button('Press to see Brent Crude Oil Raw Data'):
 df = yf.download('BZ=F', interval= getInterval(interv[0]))
@@ -56,7 +56,7 @@ df
 # model
 
 # graph visualization
-st.write("Visualizations")
+st.header("Visualizations")
 
 # TODO: find better line graphs for visualization
 st.line_chart(data=df['Close'], width=0, height=0, use_container_width=True,)
@@ -68,6 +68,6 @@ fig = px.line(df, x=df.index, y=["Close","Open"],
 st.plotly_chart(fig, use_container_width=True)
 
 # predicted data
-st.write("Predicted Data")
+st.header("Predicted Data")
 # accuracy metrics
-st.write("Accuracy Metrics")
+st.header("Accuracy Metrics")
