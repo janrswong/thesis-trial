@@ -1,6 +1,13 @@
 import streamlit as st
 import pandas as pd
 import yfinance as yf
+import matplotlib.pyplot as plt
+# from statsmodels.tsa.arima_model import ARIMA
+# from sklearn.metrics import mean_absolute_percentage_error, mean_squared_error,mean_absolute_error
+import numpy as np
+import plotly.graph_objects as go
+
+
 # from sklearn.model_selection import train_test_split
 # from sklearn.metrics import mean_squared_error, 
 
@@ -49,3 +56,7 @@ df
   
 # model
 
+# graph visualization
+st.write("Visualizations")
+
+st.line_chart(data=df['Close'], width=0, height=0, use_container_width=True,)
