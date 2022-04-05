@@ -63,6 +63,6 @@ st.line_chart(data=df['Close'], width=0, height=0, use_container_width=True,)
 
 
 # or plot the time series 
-fig = px.line(df, x=df.index, y=["Close","Actual"], 
+fig = px.line(df, x=df.index, y=["Close","Open"], 
     title="BRENT CRUDE OIL PRICES", width=1000)
 st.plotly_chart(fig, use_container_width=True)
