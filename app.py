@@ -47,4 +47,4 @@ df = yf.download('BZ=F', interval= getInterval(interv[0]))
 df
   
 # model
-  
+
