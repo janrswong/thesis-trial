@@ -7,6 +7,7 @@ authors = ["JannaWong <<>>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 streamlit = "^1.8.1"
+yfinance = "^0.1.70"
 
 [tool.poetry.dev-dependencies]
 
