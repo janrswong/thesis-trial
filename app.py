@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import plotly.graph_objects as go
 
-
 # from sklearn.model_selection import train_test_split
 # from sklearn.metrics import mean_squared_error, 
 
@@ -59,4 +58,6 @@ df
 # graph visualization
 st.write("Visualizations")
 
+# TODO: find better line graphs for visualization
 st.line_chart(data=df['Close'], width=0, height=0, use_container_width=True,)
+
