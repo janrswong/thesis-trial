@@ -23,6 +23,7 @@ st.subheader("""© Castillon, Ignas, Wong""")
 with st.sidebar.header('Set Data Split'):
   # PARAMETERS min,max,default,skip
     st.sidebar.slider('Data split ratio (% for Training Set)', 10, 90, 80,5)
+    accuracy = st.sidebar.select_slider('Performance measure (accuracy Metrics)', options=['both','mse', 'mape'])
 
 # model selection
 modSelect = st.selectbox("Select Model for Prediction:",("ARIMA & LSTM","LSTM", "ARIMA"))
@@ -52,14 +53,12 @@ st.header("Raw Data")
 # if st.button('Press to see Brent Crude Oil Raw Data'):
 df = yf.download('BZ=F', interval= getInterval(interv[0]))
 df
-  
-# model
 
 # graph visualization
 st.header("Visualizations")
 
 # TODO: find better line graphs for visualization
-st.line_chart(data=df['Close'], width=0, height=0, use_container_width=True,)
+# st.line_chart(data=df['Close'], width=0, height=0, use_container_width=True,)
 
 
 # or plot the time series 
@@ -69,5 +68,9 @@ st.plotly_chart(fig, use_container_width=True)
 
 # predicted data
 st.header("Predicted Data")
+
+# model
+
+
 # accuracy metrics
 st.header("Accuracy Metrics")
