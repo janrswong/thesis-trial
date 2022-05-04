@@ -2,13 +2,17 @@ import streamlit as st
 import pandas as pd
 import yfinance as yf
 import matplotlib.pyplot as plt
-# from statsmodels.tsa.arima_model import ARIMA
-# from sklearn.metrics import mean_absolute_percentage_error, mean_squared_error,mean_absolute_error
 import numpy as np
-# import plotly.graph_objects as go
 import plotly.express as px
-# from sklearn.model_selection import train_test_split
-# from sklearn.metrics import mean_squared_error, 
+
+import math
+
+# import statsmodels.tsa.arima.model.ARIMA
+# import statsmodels.api as sm
+from statsmodels.tsa.arima_model import ARIMA
+# from sklearn.metrics import mean_absolute_percentage_error
+# mean_squared_error,mean_absolute_error
+
 
 # page expands to full width
 st.set_page_config(page_title="LSTM vs ARIMA", layout='wide')
@@ -18,13 +22,33 @@ st.set_page_config(page_title="LSTM vs ARIMA", layout='wide')
 st.title("Crude Oil Benchmark Stock Price Prediction LSTM and ARIMA Models")
 st.subheader("""© Castillon, Ignas, Wong""")
 
+# ARIMA PARAMETERS
+pValue = 4
+dValue = 1
+qValue = 0
+
+
 # sidebar
 # Sidebar - Specify parameter settings
 with st.sidebar.header('Set Data Split'):
   # PARAMETERS min,max,default,skip
-    st.sidebar.slider('Data split ratio (% for Training Set)', 10, 90, 80,5)
+    trainData = st.sidebar.slider('Data split ratio (% for Training Set)', 10, 90, 80,5)
+    # st.write(trainData*.01)
     accuracy = st.sidebar.select_slider('Performance measure (accuracy Metrics)', options=['both','mse', 'mape'])
+    #ARIMA PARAMETERS
+    pValue = st.sidebar.number_input('P-value:',0,100,pValue)
+    st.sidebar.write('The current p-Value is ', pValue)
+    dValue = st.sidebar.number_input('D-value:',0,100,dValue)
+    st.sidebar.write('The current d-Value is ', dValue)
+    qValue = st.sidebar.number_input('Q-value:',0,100,qValue)
+    st.sidebar.write('The current q-Value is ', qValue)
+    
+  
+    
 
+# download
+  
+  
 # model selection
 modSelect = st.selectbox("Select Model for Prediction:",("ARIMA & LSTM","LSTM", "ARIMA"))
 
@@ -71,6 +95,67 @@ st.header("Predicted Data")
 
 # model
 
+# ARIMA MODEL
+# TRAIN,TEST,&SPLIT DATA
+
+# split data
+row = int(len(df)*(trainData*.01)) #80% testing
+
+trainingData = list(df[0:row]['Close'])
+# len(trainingData)
+testingData = list(df[row:]['Close'])
+# len(testingData)
+#using historical data to predict future data
+
+predictions = []
+nObservations = len(testingData)
+
+for i in range(nObservations):
+  model = ARIMA(trainingData, order=(pValue,dValue,qValue)) #p,d,q
+  # model = sm.tsa.arima.ARIMA(trainingData, order=(4,1,0)) #p,d,q
+  model_fit=model.fit()
+  output= model_fit.forecast()
+  yhat = list(output[0])[0]
+  predictions.append(yhat)
+  actualTestValue = testingData[i]
+  # update training set
+  trainingData.append(actualTestValue)
+  #print(output)
+  #break
+  
+arimamodsum=model_fit.summary()
+st.write(arimamodsum)
+
+# st.write(predictions)
+predictionss = pd.DataFrame(predictions)
+# df['ARIMApredictions'] = predictions
+
+# df = pd.insert([predictionss])
+
+# st.write(predictionss)
+# df
+
+testingSet = pd.DataFrame(testingData)
+testingSet['ARIMApredictions'] = predictions
+testingSet.columns = ['Close Prices', 'ARIMA Predictions']
+testingSet
+# #VISUALIZE DATA 
+# plt.figure(figsize=(24,24))
+# plt.grid(True)
+
+# dateRange = df[row:].index
+
+# plt.plot(dateRange, predictions, color='blue', marker = 'o', linestyle ='dashed', label='Predicted Brent Price')
+# plt.plot(dateRange, testingData, color='red', label='Original Brent Price')
+
+# plt.title(" ARIMA BRENT PRICE PREDICTION")
+# plt.xlabel('Date')
+# plt.ylabel('Price')
+# plt.legend()
+# plt.show()
+
+mape=np.mean(np.abs(np.array(predictions)-np.array(testingData))/np.abs(testingData))
+st.write("MAPE: "+ str(mape)) #Mean absolute Percentage Error
 
 # accuracy metrics
 st.header("Accuracy Metrics")

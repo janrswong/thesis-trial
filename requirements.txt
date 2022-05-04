@@ -9,3 +9,4 @@ click==8.0.4
 yfinance==0.1.70
 matplotlib==3.5.1
 cufflinks==0.17.3
+statsmodels==0.12.0
