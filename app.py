@@ -122,9 +122,13 @@ for i in range(nObservations):
   trainingData.append(actualTestValue)
   #print(output)
   #break
-  
+
+# print summary
+details = st.checkbox('Details')
+
 arimamodsum=model_fit.summary()
-st.write(arimamodsum)
+if details:
+  st.write(arimamodsum)
 
 # st.write(predictions)
 predictionss = pd.DataFrame(predictions)
@@ -139,6 +143,12 @@ testingSet = pd.DataFrame(testingData)
 testingSet['ARIMApredictions'] = predictions
 testingSet.columns = ['Close Prices', 'ARIMA Predictions']
 testingSet
+
+# plot orig price and predicted price
+fig = px.line(testingSet, x=testingSet.index, y=["Close Prices","ARIMA Predictions"], 
+    title="PREDICTED BRENT CRUDE OIL PRICES", width=1000)
+st.plotly_chart(fig, use_container_width=True)
+
 # #VISUALIZE DATA 
 # plt.figure(figsize=(24,24))
 # plt.grid(True)
@@ -157,5 +167,12 @@ testingSet
 mape=np.mean(np.abs(np.array(predictions)-np.array(testingData))/np.abs(testingData))
 st.write("MAPE: "+ str(mape)) #Mean absolute Percentage Error
 
+accTable=pd.DataFrame()
+accTable['MAPE'] = [mape]
+accTable['Articles'] = [97]
+accTable['Improved'] = [2200]
+
 # accuracy metrics
 st.header("Accuracy Metrics")
+
+st.table(accTable)
