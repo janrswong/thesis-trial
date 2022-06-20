@@ -10,8 +10,7 @@ import math
 # import statsmodels.tsa.arima.model.ARIMA
 # import statsmodels.api as sm
 from statsmodels.tsa.arima_model import ARIMA
-# from sklearn.metrics import mean_absolute_percentage_error
-# mean_squared_error,mean_absolute_error
+from sklearn.metrics import mean_absolute_percentage_error, mean_squared_error,mean_absolute_error
 
 
 # page expands to full width
@@ -165,11 +164,19 @@ st.plotly_chart(fig, use_container_width=True)
 # plt.show()
 
 mape=np.mean(np.abs(np.array(predictions)-np.array(testingData))/np.abs(testingData))
+mse = np.square(np.subtract(testingData,predictions)).mean()
+MSE=mean_squared_error(testingData,predictions)
+MAPE = mean_absolute_percentage_error(testingData,predictions)
+MAE=mean_absolute_error(testingData,predictions)
+
 st.write("MAPE: "+ str(mape)) #Mean absolute Percentage Error
+st.write("MAPE: "+ str(MAPE)) #Mean absolute Percentage Error
+st.write("MSE: "+ str(mse)) #MSE
+st.write("MSE: "+ str(MSE)) #MSE
 
 accTable=pd.DataFrame()
 accTable['MAPE'] = [mape]
-accTable['Articles'] = [97]
+accTable['MSE'] = [mse]
 accTable['Improved'] = [2200]
 
 # accuracy metrics
